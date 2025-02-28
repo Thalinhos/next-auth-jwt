@@ -3,11 +3,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 
-
 export default function Home() {
 
   const router = useRouter();
-
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,12 +22,7 @@ export default function Home() {
 
     const data = await res.json();
 
-    console.log(data);
-
-    
-
     if (res.ok) {
-      document.cookie = `token=${data.token}; path=/`;
       router.push('/protected/'); 
     } else {
       setError(data.error || 'Erro ao fazer login');

@@ -1,7 +1,9 @@
 // pages/api/auth/login.ts
+import { cookieSet } from '@/utils/cookieSet';
 import { generateToken } from '@/utils/JWT';
 import { prisma } from '@/utils/prisma';
 import bcrypt from 'bcryptjs';
+import { redirect } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 
 
@@ -20,7 +22,11 @@ export async function POST(req: NextRequest) {
 
  const token = await generateToken(user.id, user.role);
 
-  return NextResponse.json({ token });
+ console.log(token)
+
+ await cookieSet(token);
+
+ return NextResponse.json({}, { status: 200 });
 }
 
 export async function GET(req: NextRequest){
